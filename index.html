@@ -5,7 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Location Map</title>
-    <script src="app.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
+     <script src="app.js"></script>
+     <style>
+        * {
+            color:rgb(246, 235, 219);
+            background-color: rgb(75, 75, 75);
+        }
+
+        #map { 
+            height: 400px; 
+        }
+
+        .menu-option {
+            background-color:rgb(44, 44, 44); 
+        }
+
+        #menu-submit {
+            background-color: rgb(88, 147, 0);
+        }
+     </style>
 </head>
 <body>
     <form class="drop-menu">
@@ -17,5 +41,6 @@
        </select>
        <button id="menu-submit">Submit</button>
     </form>
+    <div id="map"></div>
 </body>
 </html>

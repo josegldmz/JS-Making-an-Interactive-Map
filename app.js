@@ -1,4 +1,25 @@
-// map object
+// const myMap = {
+// 	coordinates: [],
+// 	menuOption: [],
+// 	map: {},
+// 	markers: {},
+
+// 	buildMap(){
+// 		this.map = L.map('map', {
+// 			center: this.coordinates,
+// 			zoom: 11,
+// 		});
+// 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+// 		attribution:
+// 			'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+// 		minZoom: '15',
+// 		}).addTo(this.map)
+// 		const marker = L.maker(this.coordinates)
+// 		marker
+// 		.addTo(this.map).bindPopup('<p><b>Your Location</b><>br></p>').opePopup()
+// 	},
+// }
+
 const myMap = {
 	coordinates: [],
 	businesses: [],
@@ -94,3 +115,12 @@ document.getElementById('submit').addEventListener('click', async (event) => {
 	myMap.businesses = processBusinesses(data)
 	myMap.addMarkers()
 })
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Cont
