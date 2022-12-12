@@ -1,73 +1,39 @@
-// const myMap = {
-// 	coordinates: [],
-// 	menuOption: [],
-// 	map: {},
-// 	markers: {},
-
-// 	buildMap(){
-// 		this.map = L.map('map', {
-// 			center: this.coordinates,
-// 			zoom: 11,
-// 		});
-// 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-// 		attribution:
-// 			'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-// 		minZoom: '15',
-// 		}).addTo(this.map)
-// 		const marker = L.maker(this.coordinates)
-// 		marker
-// 		.addTo(this.map).bindPopup('<p><b>Your Location</b><>br></p>').opePopup()
-// 	},
-// }
-
 const myMap = {
 	coordinates: [],
-	businesses: [],
+	menuOption: [],
 	map: {},
 	markers: {},
 
-	// build leaflet map
-	buildMap() {
+	buildMap(){
 		this.map = L.map('map', {
-		center: this.coordinates,
-		zoom: 11,
+			center: this.coordinates,
+			zoom: 11,
 		});
-		// add openstreetmap tiles
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution:
 			'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 		minZoom: '15',
 		}).addTo(this.map)
-		// create and add geolocation marker
 		const marker = L.marker(this.coordinates)
 		marker
-		.addTo(this.map)
-		.bindPopup('<p1><b>You are here</b><br></p1>')
-		.openPopup()
+		.addTo(this.map).bindPopup('<p><b>Your Location</b></p>').openPopup()
 	},
-
-	// add business markers
-	addMarkers() {
-		for (var i = 0; i < this.businesses.length; i++) {
-		this.markers = L.marker([
-			this.businesses[i].lat,
-			this.businesses[i].long,
-		])
-			.bindPopup(`<p1>${this.businesses[i].name}</p1>`)
+	addMarkers(){
+		for (var i =0; i < this.menuOption.length; i++){
+			this.markers = L.markers([this.menuOption[i].lat, this.menuOption[i].long])
+			.bindPopup('<p>${this.menuOption[i].name}</p>')
 			.addTo(this.map)
 		}
-	},
+	}
 }
 
-// get coordinates via geolocation api
 async function getCoords(){
-	const pos = await new Promise((resolve, reject) => {
+	const pos = await new Promise ((resolve, reject)=>{
 		navigator.geolocation.getCurrentPosition(resolve, reject)
 	});
 	return [pos.coords.latitude, pos.coords.longitude]
 }
 
-// get foursquare businesses
 async function getFoursquare(business) {
 	const options = {
 		method: 'GET',
@@ -85,9 +51,9 @@ async function getFoursquare(business) {
 	let businesses = parsedData.results
 	return businesses
 }
-// process foursquare array
-function processBusinesses(data) {
-	let businesses = data.map((element) => {
+
+function processMenuOption(data) {
+	let menuOption = data.map((element) => {
 		let location = {
 			name: element.name,
 			lat: element.geocodes.main.latitude,
@@ -95,32 +61,35 @@ function processBusinesses(data) {
 		};
 		return location
 	})
-	return businesses
+	return menuOption
 }
-
-
-// event handlers
-// window load
 window.onload = async () => {
 	const coords = await getCoords()
 	myMap.coordinates = coords
 	myMap.buildMap()
 }
 
-// business submit button
-document.getElementById('submit').addEventListener('click', async (event) => {
+document.getElementById('menu-submit').addEventListener('click', async (event) => {
 	event.preventDefault()
-	let business = document.getElementById('business').value
+	let business = document.getElementById('menu-option').value
 	let data = await getFoursquare(business)
-	myMap.businesses = processBusinesses(data)
+	myMap.menuOption = processMenuOption(data)
 	myMap.addMarkers()
 })
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Cont
+
+// function onLocationFound(e) {
+//     var radius = e.accuracy;
+
+//     L.marker(e.latlng).addTo(map)
+//         .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+//     L.circle(e.latlng, radius).addTo(map);
+// }
+
+// map.on('locationfound', onLocationFound);
+
+// function onLocationError(e) {
+//     alert(e.message);
+// }
+
+// map.on('locationerror', onLocationError);
